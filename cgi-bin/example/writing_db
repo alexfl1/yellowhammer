@@ -1,0 +1,33 @@
+import MySQLdb
+
+db= MySQLdb.connect(host="localhost", user="python-test", passwd="python",
+db="python-test")
+try:
+    title = raw_input("Please enter a book title: ")
+    if title == "" :
+        exit
+    author = raw_input("Please enter the author's name: ")
+    pubdate = int( raw_input("Enter the publication year: ") )
+except:
+    print "Invalid value"
+    exit
+
+print "Title: [" + title + "]"
+print "Author: ["+ author + "]"
+print "Publication Date: " + str(pubdate)
+
+cursor = db.cursor()
+
+stmt = "INSERT INTO Books (BookName, BookAuthor, PublicationDate) VALUES ('"
+stmt = stmt + title
+stmt = stmt + "', '"
+stmt = stmt + author
+stmt = stmt + "', "
+stmt = stmt + str(pubdate)
+stmt = stmt + ")"
+cursor.execute(stmt)
+print "Record added!"
+
+cursor.close ()
+db.commit ()
+
